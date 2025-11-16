@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Anindita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --gold: #C9A84A;
+            --gold-light: #f3e8b0;
+            --bg-color: #FAF9F7;
+            --card-bg: #FFFFFF;
+            --text-dark: #333;
+            --text-medium: #666;
+            --text-light: #8b8b8b;
+            --shadow: 0 10px 30px rgba(0,0,0,0.04);
+            --shadow-hover: 0 15px 35px rgba(0,0,0,0.08);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        /* Welcome Screen */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #f5f2eb 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .welcome-content {
+            max-width: 600px;
+            width: 90%;
+            padding: 40px 30px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .welcome-content h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 2.625rem);
+            margin-bottom: 20px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+        
+        .welcome-content p {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+        }
+        
+        .enter-btn {
+            background: var(--gold);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            color: white;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .enter-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .enter-btn:hover:before {
+            left: 100%;
+        }
+        
+        .enter-btn:hover {
+            background: #b8942f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201,168,74,0.3);
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Main Content */
+        #main-content {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(201,168,74,0.2);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .brand-text h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            color: var(--text-dark);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .brand-text p {
+            color: var(--text-light);
+            font-size: clamp(0.75rem, 2vw, 0.875rem);
+        }
+        
+        nav {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            padding: 8px 16px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            font-size: clamp(0.875rem, 2vw, 1rem);
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            margin-bottom: 60px;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-text h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        .hero-text .subtitle {
+            color: var(--text-light);
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            margin-bottom: 30px;
+        }
+        
+        .gold-line {
+            height: 3px;
+            width: 100px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            margin: 25px auto;
+        }
+        
+        .hero-text p {
+            color: var(--text-medium);
+            margin-bottom: 20px;
+            font-size: clamp(0.9rem, 2vw, 1.125rem);
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            background: var(--gold);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            color: white;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            flex-grow: 1;
+            min-width: 140px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover:before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            background: #b8942f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201,168,74,0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(201,168,74,0.1);
+        }
+        
+        /* Sections */
+        .section {
+            margin-bottom: 60px;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gold);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover:before {
+            transform: scaleY(1);
+        }
+        
+        @media (min-width: 768px) {
+            .section {
+                padding: 40px;
+                margin-bottom: 80px;
+            }
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section h2:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+        }
+        
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        @media (min-width: 768px) {
+            .two-col {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+        
+        .section p {
+            color: var(--text-medium);
+            margin-bottom: 20px;
+            font-size: clamp(0.9rem, 2vw, 1.125rem);
+        }
+        
+        /* Quote Styling */
+        .quote {
+            font-style: italic;
+            padding: 25px;
+            border-left: 4px solid var(--gold);
+            background: linear-gradient(90deg, rgba(201,168,74,0.03), transparent);
+            border-radius: 8px;
+            position: relative;
+            margin: 25px 0;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: #555;
+        }
+        
+        .quote:before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 60px;
+            color: rgba(201,168,74,0.2);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        /* Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        @media (min-width: 480px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+                margin-top: 30px;
+            }
+        }
+        
+        .gallery-item {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .gallery-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(201,168,74,0.1) 0%, transparent 50%, rgba(201,168,74,0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+        
+        .gallery-item:hover:before {
+            opacity: 1;
+        }
+        
+        @media (min-width: 768px) {
+            .gallery-item {
+                height: 100%;
+            }
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 40px 0;
+        }
+        
+        .divider:before,
+        .divider:after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        
+        .divider-text {
+            padding: 0 20px;
+            color: var(--gold);
+            font-weight: 500;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-light);
+            font-size: 14px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            margin-top: 40px;
+        }
+        
+        footer p {
+            margin-bottom: 10px;
+        }
+        
+        /* Music Button */
+        .music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--gold);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: #b8942f;
+        }
+        
+        .music-btn i {
+            color: white;
+            font-size: 20px;
+        }
+        
+        /* Mobile Navigation Toggle */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+        
+        @media (max-width: 767px) {
+            .nav-toggle {
+                display: block;
+            }
+            
+            nav {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                margin-top: 15px;
+            }
+            
+            nav.active {
+                display: flex;
+            }
+            
+            nav a {
+                width: 100%;
+                text-align: center;
+                padding: 12px 0;
+            }
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: var(--gold);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #b8942f;
+            transform: translateY(-3px);
+        }
+        
+        /* Special Section Styling */
+        .special-section {
+            background: linear-gradient(135deg, rgba(201,168,74,0.03) 0%, rgba(255,255,255,1) 100%);
+            border: 1px solid rgba(201,168,74,0.1);
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.5rem, 3vw, 1.75rem);
+            margin-bottom: 15px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        
+        .highlight {
+            color: var(--gold);
+            font-weight: 600;
+        }
+        
+        .personal-message {
+            background: linear-gradient(135deg, rgba(201,168,74,0.05) 0%, rgba(255,255,255,1) 100%);
+            padding: 30px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            border-left: 4px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .personal-message:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(201,168,74,0.03) 0%, transparent 50%, rgba(201,168,74,0.01) 100%);
+            z-index: 0;
+        }
+        
+        .personal-message p {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .casual-phrase {
+            font-style: italic;
+            color: var(--text-medium);
+        }
+        
+        /* Decorative Elements */
+        .decoration {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(201,168,74,0.1) 0%, rgba(201,168,74,0.05) 100%);
+            z-index: 0;
+        }
+        
+        .decoration-1 {
+            top: -30px;
+            right: -30px;
+            width: 150px;
+            height: 150px;
+        }
+        
+        .decoration-2 {
+            bottom: -40px;
+            left: -40px;
+            width: 120px;
+            height: 120px;
+        }
+        
+        /* Centered Text Layout */
+        .centered-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcome-screen">
+        <div class="welcome-content floating">
+            <h1>Happy Birthday, My Love</h1>
+            <p>Click the button below to open your special birthday message</p>
+            <button class="enter-btn" id="enter-btn">Click to Open</button>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div id="main-content">
+        <header>
+            <div class="brand">
+                <div class="brand-text">
+                    <h2>For Anindita Nevia Parastika</h2>
+                    <p>From Daffa</p>
+                </div>
+            </div>
+            <button class="nav-toggle" id="nav-toggle">☰</button>
+            <nav id="main-nav">
+                <a href="#opening">Opening</a>
+                <a href="#message">Personal Message</a>
+                <a href="#wishes">My Hopes</a>
+                <a href="#gallery">Memories</a>
+            </nav>
+        </header>
+        
+        <!-- Hero Section -->
+        <section class="hero" id="opening">
+            <div class="hero-text">
+                <h1>Happy Birthday, Anindita</h1>
+                <div class="subtitle">Today you turn 18, but you're still as wonderfully you as ever!</div>
+                <div class="gold-line"></div>
+                <p>Happy birthday, my love! I can't believe you're already 18... but honestly, you're still just as perfect as the day I met you. <span class="casual-phrase">I hope on this special day you get tons of happiness.</span></p>
+                <p>Your birthday isn't just about turning 18, it's about celebrating the amazing person you've become. Each passing year makes me realize how incredibly lucky I am to know you and to be part of your journey.</p>
+                <div class="btn-container">
+                    <button class="btn" onclick="scrollToSection('message')">Read My Message</button>
+                    <button class="btn btn-outline" onclick="toggleAudio()" id="music-btn">Pause Music</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Personal Message Section -->
+        <section class="section special-section" id="message">
+            <div class="decoration decoration-1"></div>
+            <div class="decoration decoration-2"></div>
+            <h2>From My Heart</h2>
+            
+            <div class="personal-message">
+                <p>My hope for you is that all your endeavors become easier. Keep fighting, future doctor! Sometimes I'm at a loss for words <span class="casual-phrase"></span>, but I always wish the best for you.</p>
+                
+                <p>Every time you talk about your studies or internships, I'm always amazed by your dedication. The journey to become a doctor isn't easy, but I'm confident you can do it. <span class="casual-phrase">You have this incredible strength</span> that sometimes even you don't realize. I'll always be here to listen to your stories, both the joyful ones and the frustrating ones.</p>
+            </div>
+            
+            <div class="personal-message">
+                <p>I'm also sorry that lately I haven't been able to give you much time, I'm still often busy, and haven't been the best partner for you. <span class="casual-phrase">I'm working on being better</span>, I promise. I hope I'm still given time until I can accompany you not just in special moments, but in all moments of your life.</p>
+                
+                <p><span class="casual-phrase">I want to be there for everything</span> - from small things like accompanying you while you study to when you graduate. <span class="casual-phrase">I want to witness all your achievements</span> and be the first person to say "I knew you could do it."</p>
+            </div>
+            
+            <div class="personal-message">
+                <p>Thank you for giving me the chance to get to know you better, thank you for being there when I was down recently. That time was really tough for me, and <span class="casual-phrase">your presence meant everything</span>. You didn't just accompany me, but you also gave me strength to get back up again.</p>
+                
+                <p>I hope I can fulfill all my promises, and I hope I'm given time until all of that can happen. <span class="casual-phrase">I don't want to just make promises, I want to keep them</span>. And most importantly, I want to prove that you weren't wrong to trust me.</p>
+            </div>
+            
+            <div class="divider">
+                <div class="divider-text">Our Journey</div>
+            </div>
+            
+            <div class="two-col">
+                <div>
+                    <p>There was a time when our paths separated, and that really hit me hard. But the most valuable thing of all is that we chose to come back, we chose to fix things, <span class="casual-phrase">and choose to grow together</span>.</p>
+                    
+                    <p>When we were apart before, I learned so much about myself and about what really matters. That's what made me realize how precious every second we spend together now is.</p>
+                </div>
+                <div>
+                    <p>I want you to know that I've forgiven everything from our past. All the misunderstandings and difficult moments are part of our history, but they don't define our future.</p>
+                    
+                    <p>You've taught me the meaning of patience, commitment, and unconditional love. You've shown me that true love isn't about perfection, but <span class="casual-phrase">about accepting imperfections with an open heart</span>.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Wishes Section -->
+        <section class="section" id="wishes">
+            <h2>My Hopes & Promises</h2>
+            <div class="two-col">
+                <div>
+                    <div class="section-title">For You</div>
+                    <p>I hope this year brings you closer to your dream of becoming a doctor. May you find strength during difficult exams, joy in small victories, and fulfillment in helping others.</p>
+                    
+                    <p><span class="casual-phrase">I wish you endless days filled with genuine laughter</span> that comes from deep within your soul. May you always have the courage to be authentically yourself and pursue what sets your soul on fire.</p>
+                    
+                    <p>Most importantly, I hope you always remember how special you are - your presence makes the world brighter, your kindness makes it warmer, and your spirit makes it more beautiful.</p>
+                </div>
+                <div>
+                    <div class="section-title">For Us</div>
+                    <p>I promise to always be your safe harbor in life's storms. <span class="casual-phrase">I promise to be your biggest cheerleader</span> in all your endeavors, and your most honest companion when you need guidance.</p>
+                    
+                    <p>I promise to stand by your side through all of life's ups and downs, to celebrate your victories as if they were my own, and to support you through challenges with unwavering faith in your strength.</p>
+                    
+                    <p>I promise to continue learning about you, to remain curious about your thoughts and feelings, and to never take you for granted. I will work on our relationship every single day, nurturing it with intention and care.</p>
+                </div>
+            </div>
+            
+            <div class="divider">
+                <div class="divider-text">My Commitment</div>
+            </div>
+            
+            <div class="centered-text">
+                <p><span class="highlight">I don't want to experience losing you again.</span> I want us to grow together, learn together, and build a meaningful life - together. <span class="casual-phrase">I want to be there for all of it</span> - from ordinary days to extraordinary celebrations, from quiet mornings to lively gatherings.</p>
+                
+                <p>My greatest hope is that we continue choosing each other, day after day, year after year. That we navigate life's complexities hand in hand, supporting each other's dreams while building shared ones.</p>
+            </div>
+        </section>
+        
+        <!-- Gallery Section -->
+        <section class="section" id="gallery">
+            <h2>Our Memories</h2>
+            <p>Some moments we've experienced together. <span class="casual-phrase">Each image reminds me of our journey</span> and how precious every second we spend together is.</p>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="" alt="Memory 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="" alt="Memory 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="" alt="Memory 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="" alt="Memory 4">
+                </div>
+                <div class="gallery-item">
+                    <img src="" alt="Memory 5">
+                </div>
+                <div class="gallery-item">
+                    <img src="" alt="Memory 6">
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>Created with care and affection — from Daffa to Anindita.</p>
+            <p>"Sometimes we need to be apart to realize how much we want to be together."</p>
+        </footer>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="back-to-top" onclick="scrollToTop()">↑</div>
+    
+    <!-- Music Button -->
+    <button class="music-btn" onclick="toggleAudio()" id="music-control">
+        ♪
+    </button>
+    
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="source/Music.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // Welcome screen functionality
+        document.getElementById('enter-btn').addEventListener('click', function() {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            
+            // Try to play audio after user interaction
+            setTimeout(function() {
+                toggleAudio();
+            }, 500);
+        });
+        
+        // Mobile navigation toggle
+        document.getElementById('nav-toggle').addEventListener('click', function() {
+            document.getElementById('main-nav').classList.toggle('active');
+        });
+        
+        // Audio control
+        const audio = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('music-btn');
+        const musicControl = document.getElementById('music-control');
+        let audioPlaying = false;
+        
+        function toggleAudio() { 
+            if(audio.paused) { 
+                audio.play().then(() => {
+                    audioPlaying = true;
+                    musicBtn.textContent = 'Pause Music';
+                }).catch((e) => {
+                    console.error('Audio play failed:', e);
+                }); 
+            } else { 
+                audio.pause();
+                audioPlaying = false;
+                musicBtn.textContent = 'Play Music';
+            }
+        }
+        
+        // Smooth scrolling for navigation
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({behavior: 'smooth'});
+            
+            // Close mobile menu if open
+            if (window.innerWidth <= 767) {
+                document.getElementById('main-nav').classList.remove('active');
+            }
+        }
+        
+        // Back to top functionality
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        
+        // Show/hide back to top button
+        window.addEventListener('scroll', function() {
+            const backToTopButton = document.getElementById('back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('active');
+            } else {
+                backToTopButton.classList.remove('active');
+            }
+        });
+        
+        // Initialize page
+        window.addEventListener('load', () => {
+            // Set up navigation
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    scrollToSection(targetId.substring(1));
+                });
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                const nav = document.getElementById('main-nav');
+                const toggle = document.getElementById('nav-toggle');
+                
+                if (window.innerWidth <= 767 && nav.classList.contains('active') && 
+                    !nav.contains(e.target) && !toggle.contains(e.target)) {
+                    nav.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
